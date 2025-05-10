@@ -43,7 +43,12 @@ forward_rate = spot_rate * (1 + domestic_rate * time_to_maturity) / (1 + foreign
 
 # 顯示結果
 st.markdown(
-    f"<h2 style='text-align: center; color: #2E8B57;'>🚀 Forward Rate after {days} days: <span style='font-size: 42px;'>{forward_rate:.4f}</span></h2>",
+    f"""
+    <div style="text-align: center; margin-top: 30px;">
+        <p style="font-size: 28px; color: #444;">📆 Days to Maturity: <strong>{days}</strong></p>
+        <p style="font-size: 40px; color: #008080;"><strong>🚀 Forward Rate: {forward_rate:.4f}</strong></p>
+    </div>
+    """,
     unsafe_allow_html=True
 )
 # Footer
