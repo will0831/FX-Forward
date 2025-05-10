@@ -42,15 +42,8 @@ time_to_maturity = days_until_maturity / 360  # 金融業常用360日基準
 forward_rate = spot_rate * (1 + domestic_rate * time_to_maturity) / (1 + foreign_rate * time_to_maturity)
 
 # 顯示結果
-st.markdown(
-    f"""
-    <div style="text-align: center; margin-top: 30px;">
-        <p style="font-size: 28px; color: #444;">📆 Days to Maturity: <strong>{days}</strong></p>
-        <p style="font-size: 40px; color: #008080;"><strong>🚀 Forward Rate: {forward_rate:.4f}</strong></p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.write(f"Results")
+st.write(f"Forward Rate after {days} days: {forward_rate:.4f}")
 # Footer
 st.markdown("---")
 st.caption("Developed by William | FX Forward Model")
