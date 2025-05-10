@@ -20,6 +20,16 @@ if st.button("Calculate Forward Rate"):
     except ZeroDivisionError:
         st.error("Foreign interest rate caused a division by zero. Please check your input.")
 
+days_until_maturity = st.slider(
+    "Days until Forward Contract Maturity",
+    min_value=0,
+    max_value=365,
+    value=30,  # 預設值
+    step=1
+)
+
+st.write(f"You selected {days_until_maturity} days.")
+
 # Footer
 st.markdown("---")
-st.caption("Developed by Eddy | FX Forward Model 2K7")
+st.caption("Developed by William | FX Forward Model")
