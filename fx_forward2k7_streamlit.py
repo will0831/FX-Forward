@@ -1,35 +1,49 @@
-
 import streamlit as st
 
-# Title
-st.title("FX Forward Rate Calculator")
+st.title("FX Forward Contract Calculator")
 
-# Inputs
-st.subheader("Input Parameters")
-spot = st.number_input("Spot FX Rate (e.g., 1.1000)", value=1.1000, step=0.0001, format="%.4f")
-r_domestic = st.number_input("Domestic Interest Rate (%)", value=5.00, step=0.01)
-r_foreign = st.number_input("Foreign Interest Rate (%)", value=2.00, step=0.01)
-days = st.number_input("Days until Forward Contract Maturity", value=180, step=1)
-
-# Calculate forward rate
-if st.button("Calculate Forward Rate"):
-    t = days / 360  # Assuming 360-day convention
-    try:
-        forward_rate = spot * (1 + r_domestic / 100 * t) / (1 + r_foreign / 100 * t)
-        st.success(f"FX Forward Rate: {forward_rate:.4f}")
-    except ZeroDivisionError:
-        st.error("Foreign interest rate caused a division by zero. Please check your input.")
-
+# 拉條選擇：合約到期天數
 days_until_maturity = st.slider(
     "Days until Forward Contract Maturity",
-    min_value=0,
+    min_value=1,
     max_value=365,
-    value=30,  # 預設值
+    value=30,
     step=1
 )
 
-st.write(f"You selected {days_until_maturity} days.")
+# 輸入 spot rate
+spot_rate = st.number_input(
+    "Spot Rate (e.g., USD/EUR)",
+    min_value=0.0001,
+    value=1.10,
+    step=0.0001
+)
 
+# 輸入 domestic interest rate
+domestic_rate = st.number_input(
+    "Domestic Interest Rate (Annual, %)",
+    min_value=0.0,
+    value=5.0,
+    step=0.1
+) / 100
+
+# 輸入 foreign interest rate
+foreign_rate = st.number_input(
+    "Foreign Interest Rate (Annual, %)",
+    min_value=0.0,
+    value=2.0,
+    step=0.1
+) / 100
+
+# 計算年期 (以天數換算)
+time_to_maturity = days_until_maturity / 360  # 金融業常用360日基準
+
+# 計算 forward rate
+forward_rate = spot_rate * (1 + domestic_rate * time_to_maturity) / (1 + foreign_rate * time_to_maturity)
+
+# 顯示結果
+st.subheader("Results")
+st.write(f"Forward Rate after {days_until_maturity} days: **{forward_rate:.4f}**")
 # Footer
 st.markdown("---")
 st.caption("Developed by William | FX Forward Model")
